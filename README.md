@@ -53,6 +53,56 @@ export default function App() {
    - we use setOutputText to change the text
  - We will also modify the jsx slightly to include a button to change the text we display.
 
+## 23. Getting Started with Styles
+
+ - To understand everything, we will start from scratch.
+
+```javascript
+import React from 'react';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+
+export default function App() {
+  return (
+    <View style={{}}>
+      <View>
+        <TextInput/>
+        <Button title="ADD"/>
+      </View>
+      <View>
+
+      </View>
+    </View>
+  );
+}
+```
+ - To see what kidn of styles to add to View, refer to this link: https://reactnative.dev/docs/view-style-props
+
+```javascript
+<TextInput 
+placeholder="Course Goal" 
+style={{borderBottomColor: 'black', borderBottomWidth: 1, padding: 10}}/>
+<Button title="ADD"/>
+```
+
+ - And then, we add a placeholder and style to the text input.
+
+
+## 24. Flexbox & Layouts (Intro)
+
+ - Flexbox allow us to lay out components either vertically or horizontally. We can control this using flexDirection.
+
+```javascript
+<View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+  <TextInput 
+  placeholder="Course Goal" 
+  style={{width: '80%', borderBottomColor: 'black', borderBottomWidth: 1, padding: 10}}/>
+  <Button title="ADD"/>
+</View>
+```
+ - As shown in code snippet above (in View), we set:
+   - flexDirection to 'row': meaning we want to lay out components horizontally.
+   - justifyContent to 'space-between': meaning we want all the remaining space to be in between the components. In this case, it makes the textInput and Button on either ends and a huge space in between.
+   - alignItems to 'center': this will center things.
 
 
 
