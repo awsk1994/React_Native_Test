@@ -203,5 +203,84 @@ style={{borderBottomColor: 'black', borderBottomWidth: 1, padding: 10}}/>
 
 <img src="newProject1/assets/notes/25_flexTidyingUp.png"/>
 
- - Lastly, we can tidy it up slightly by assigning justifyContent and alignItems.
+ - Lastly, we can tidy it up slightly with justifyContent and alignItems.
+
+## 26. Inline Styles & StyleSheet Objects
+
+ - Using inline styles can be messy as the styles increase. Therefore, we use something called **StyleSheet**.
+ - Another advantage is by using StyleSheet, any style errors will be caught and thrown. (whereas inline style errors fail silently).
+
+```javascript
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native'; // import StyleSheet.
+```
+
+ - First, we need to import StyleSheet.
+ - To use stylesheet, we need to create an instance of StyleSheet first: 
+
+```javascript
+const styles = StyleSheet.create({
+  screen: { // 'screen'' can be any name.
+    padding: 50
+  },
+  inputContainer: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center'
+  },
+  textInput: {
+    width: '80%',
+    borderBottomColor: 'black', 
+    borderBottomWidth: 1, 
+    padding: 10
+  }
+})
+```
+ - 'screen', 'inputContainer' and 'textInput' can be any name.
+ - To apply styles, we do this:
+
+```javascript
+<View style={styles.inputContainer}>
+```
+
+ - To compare, we will show before and after below.
+
+**Before StyleSheet:**
+
+```javascript
+<View style={{ padding: 30 }}>
+  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+    <TextInput
+      placeholder="Course Goal"
+      style={{ width: '80%', borderBottomColor: 'black', borderBottomWidth: 1, padding: 10 }} />
+    <Button title="ADD" />
+  </View>
+  <View>
+  </View>
+</View>
+```
+
+**After StyleSheet:**
+
+```javascript
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+```
+```javascript
+<View style={styles.screen}>            <!--Added styles here -->
+  <View style={styles.inputContainer}>  <!--Added styles here -->
+    <TextInput
+      placeholder="Course Goal"
+      style={styles.textInput} />       <!--Added styles here -->
+    <Button title="ADD" />
+  </View>
+</View>
+```
+```javascript
+const styles = StyleSheet.create({
+  screen: { // 'screen'' can be any name.
+    padding: 50
+  }
+  ...
+})
+```
+
 
