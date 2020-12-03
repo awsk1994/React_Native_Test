@@ -1,10 +1,15 @@
 # React Native Test
 
 ## How to run?
+
 ```
 cd newProject1
-npm run android
+npm run android -OR- npm start
 ```
+
+## Tutorial Link
+
+ - https://www.udemy.com/course/react-native-the-practical-guide
 
 ## 7. Creating our First React Native App
 
