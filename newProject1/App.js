@@ -3,14 +3,15 @@ import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
 export default function App() {
   return (
-    <View style={{padding: 30}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-        <TextInput 
-        placeholder="Course Goal" 
-        style={{width: '80%', borderBottomColor: 'black', borderBottomWidth: 1, padding: 10}}/>
-        <Button title="ADD"/>
+    <View style={{flexDirection: 'row', width: '80%', height: 100}}>
+      <View style={{backgroundColor: 'red', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>1</Text>
       </View>
-      <View>
+      <View style={{backgroundColor: 'blue', flex: 2, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>2</Text>
+      </View>
+      <View style={{backgroundColor: 'yellow', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>3</Text>
       </View>
     </View>
   );

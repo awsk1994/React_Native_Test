@@ -88,7 +88,7 @@ style={{borderBottomColor: 'black', borderBottomWidth: 1, padding: 10}}/>
 
 
 ## 24. Flexbox & Layouts (Intro)
-
+ - Every View in React Native uses Flexbox by default (direction set to vertical).
  - Flexbox allow us to lay out components either vertically or horizontally. We can control this using flexDirection.
 
 ```javascript
@@ -104,5 +104,104 @@ style={{borderBottomColor: 'black', borderBottomWidth: 1, padding: 10}}/>
    - justifyContent to 'space-between': meaning we want all the remaining space to be in between the components. In this case, it makes the textInput and Button on either ends and a huge space in between.
    - alignItems to 'center': this will center things.
 
+ - We will explain these in more details in the next section.
 
+## 25. React Native Flexbox Deep Dive
+
+ - To explain Flexbox more, we will have three boxes.
+
+```javascript
+<View style={{flexDirection: 'row'}}>
+  <View style={{backgroundColor: 'red'}}>
+    <Text>1</Text>
+  </View>
+  <View style={{backgroundColor: 'blue'}}>
+    <Text>2</Text>
+  </View>
+  <View style={{backgroundColor: 'yellow'}}>
+    <Text>3</Text>
+  </View>
+</View>
+```
+<img src="newProject1/assets/notes/25_initial.png"/>
+
+ - Now, we will add more flexbox configurations.
+
+```javascript
+<View style={{flexDirection: 'row', width: '80%', height: 100}}>
+  <View style={{backgroundColor: 'red'}}>
+    <Text>1</Text>
+  </View>
+  <View style={{backgroundColor: 'blue'}}>
+    <Text>2</Text>
+  </View>
+  <View style={{backgroundColor: 'yellow'}}>
+    <Text>3</Text>
+  </View>
+</View>
+```
+
+<img src="newProject1/assets/notes/25_flexConfig1.png"/>
+
+ - As you can see, after we added width and height on the parent View style, the child has taken up all of the height, but not all the width (only takes up the minimum width necessary). 
+   - This is because there exists a concept of **main axis** and **cross axis**. This is determined by the flexDirection; If flexDirection is row, the main axis is horizontal. vice versa. 
+   - By default, components in a View takes up all the cross axis (in this case, the height). But not the main axis (in this case, the width).
+     - That being said, we can control how the main axis is distributed via a 'flex' property (explained later).
+ - To recap a previous concept in more details:
+   - flexDirection: set our main and cross axis.
+   - justifyContent: configure child component in main axis.
+   - alignitems: configure child component in cross axis.
+
+**Flex Property**
+
+```javascript
+<View style={{backgroundColor: 'red', flex: 1}}>
+  <Text>1</Text>
+</View>
+```
+<img src="newProject1/assets/notes/25_flexProperty1.png"/>
+
+ - As you can see, when we add the flex property to the '1' child view, '1' child view takes up all the **remaining space**.
+
+```javascript
+<View style={{backgroundColor: 'red', flex: 1}}>
+  <Text>1</Text>
+</View>
+<View style={{backgroundColor: 'blue', flex: 1}}>
+  <Text>2</Text>
+</View>
+``` 
+
+<img src="newProject1/assets/notes/25_flexProperty2.png"/>
+
+ - As you can see, when we add the flex property with same value to two child views, they share the remaning space.
+
+```javascript
+<View style={{flexDirection: 'row', width: '80%', height: 100}}>
+  <View style={{backgroundColor: 'red', flex: 1}}>
+    <Text>1</Text>
+  </View>
+  <View style={{backgroundColor: 'blue', flex: 2}}>
+    <Text>2</Text>
+  </View>
+  ```
+
+<img src="newProject1/assets/notes/25_flexProperty3.png"/>
+
+- As you can see, when we change the '2' child view's flex property to 2, the reamining space shared to '2' is 2/3 of remaining space, and shared to '1' is 1/3. 
+   - This is because '1' has flex: 1, 
+   '2' has flex: 2.
+
+```javascript
+<View style={{backgroundColor: 'red', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+...
+<View style={{backgroundColor: 'blue', flex: 2, justifyContent: 'center', alignItems: 'center'}}>
+...
+<View style={{backgroundColor: 'yellow', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+...
+```
+
+<img src="newProject1/assets/notes/25_flexTidyingUp.png"/>
+
+ - Lastly, we can tidy it up slightly by assigning justifyContent and alignItems.
 
