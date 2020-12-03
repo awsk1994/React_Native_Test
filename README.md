@@ -283,4 +283,79 @@ const styles = StyleSheet.create({
 })
 ```
 
+## 27. Working with State & Events
+
+```javascript
+import React, { useState } from 'react';
+```
+
+ - First, we need to import useState.
+
+```javascript
+const [enteredGoal, setEnteredGoal] = useState('');
+```
+ - Then, we use useState('') to return a string and a function modify it.
+   - enteredGoal is the string/variable to display.
+   - setEnteredGoal is a function to set the enteredGoal string/variable.
+
+```javascript
+<TextInput
+  placeholder="Course Goal"
+  style={styles.textInput}
+  value={enteredGoal} 
+  onChangeText={goalInputHandler} /> 
+```
+ - Then, we add the 'value' property to TextInput, setting it to enteredGoal. This will display enteredGoal in the TextView.
+ - Then, we add the 'onChangeText' property. When we enter a new character into the textInput, it will trigger the function in onChangeText and update the new value to enteredGoal.
+   - Note that you **don't need to add parenthesis** to goalInputHandler (explained below), otherwise, this will execute this method when the UI is rendered for the first time.
+
+```javascript
+function goalInputHandler(enteredText){ // cleaner code.
+  setEnteredGoal(enteredText);
+}
+```
+
+ - goalInputHanlder is a separate function we write. We use this (almost like a wrapper) instead of setEnteredGoal for cleaner code (incase we need to make additional changes in the future).
+
+**Configuring the ADD button**
+
+ - Next, we add 'onPress' property to the 'ADD' button. When we press this button, the function in onPress will be triggered.
+
+```javascript
+<Button title="ADD" onPress={addGoalHandler}/>
+```
+
+ - addGoalHandler will add the entered goal(enteredGoal) to the list of goals. But for now, we will simply console.log the enteredGoal.
+
+```javascript
+function addGoalHandler(){
+  console.log(enteredGoal);
+}
+```
+
+**Implementing addGoalHandler**
+
+```javascript
+const [courseGoals, setCourseGoals] = useState([]);
+```
+
+ - First, we define a courseGoals array, and a function to update it.
+
+```javascript
+function addGoalHandler(){
+  // [...courseGoals] means to copy the courseGoals to this new array. 
+  // And ,enteredGoal adds enteredGoal to the new array.
+  setCourseGoals([...courseGoals, enteredGoal]);
+}
+```
+
+ - But this **does not guarantee we get latest courseGoals**.
+
+```javascript
+function addGoalHandler(){
+  setCourseGoals(currentGoals => [...courseGoals, enteredGoal]);  // arrow function.
+}
+```
+
+ - We can use anonymous function to guarantee we get the latest courseGoals, because we are passing courseGoals (into anonymous function).
 
