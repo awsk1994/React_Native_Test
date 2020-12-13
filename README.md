@@ -364,3 +364,16 @@ function addGoalHandler(){
 
  - We can use anonymous function to guarantee we get the latest courseGoals, because we are passing courseGoals (into anonymous function).
 
+## 28. Outputting a List of Items
+
+```javascript
+<View>
+  {courseGoals.map((goal) => <Text key={goal}>{goal}</Text>)}
+</View>
+```
+
+ - In the above code, we take courseGoals and map it to a Text component via arrow function and map(..)
+   - Note that we need to add a key prop(property), so React can figure out which Text component to update in the future.
+   - We will set key prop to goal for now. WARNING: key prop should be unique. For now, we will assume goal is unique.
+
+  
