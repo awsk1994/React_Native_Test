@@ -396,7 +396,16 @@ listItem: {
 ```
  - We need to move the key to the root element (which is the View, not the Text) (Or else, you will get a warning).
 
+## 30. Making it Scrollable with ScrollView!
 
+ - For now, once the number of boxes is more than the page can fit, ti should be scrollable. So, we want to implement this.
 
-
+```js
+import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+...
+<ScrollView>
+  {courseGoals.map((goal) => <View key={goal} style={styles.listItem}><Text>{goal}</Text></View>)}
+</ScrollView>
+```
+ - We switch from <View> to <ScrollView>
 
