@@ -482,3 +482,53 @@ function addGoalHandler(){
 />
 ```
 
+## 32. Splitting the App Into Components
+ 
+ - Now, we want to the jsx in App.js into multiple components. Let's focus on the component in the FlatList first.
+
+ - Creating components/GoalItem.js:
+
+```js
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const GoalItem = props => {   // the Input is props.
+  return (
+    <View style={styles.listItem}>  <!--Explained later-->
+      <Text>{props.title}</Text>  
+      <!--Instead of getting itemData.item.value, we are getting the string from props (our input)'s title. Title can be anything, as long as we use the same when we refer from App.js-->
+    </View>
+  )
+}
+export default GoalItem; // Export this component
+``` 
+
+ - We also include a StyleSheet component to configure our styles.
+```js
+const styles = StyleSheet.create({
+  listItem: {
+    padding: 10,
+    marginVertical: 10, // margin top and bottom
+    backgroundColor: '#ccc',
+    borderColor: 'black',
+    borderWidth: 1
+  }
+})
+```
+
+ - Now, we modify App.js to use GoalItem component. 
+ - First, import GoalItem.
+```js
+import GoalItem from './components/GoalItem';
+```
+
+ - Then, modify FlatList's renderItem.
+```js
+<FlatList
+  keyExtractor={(item, index) => item.id}
+  data={courseGoals}
+  renderItem={itemData => <GoalItem title={itemData.item.value}/>}
+/>
+```
+ - Notice that we input use the title property in GoalItem, because we refer to the same data 'title' in the GoalItem.js component.
+
