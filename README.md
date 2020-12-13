@@ -532,3 +532,88 @@ import GoalItem from './components/GoalItem';
 ```
  - Notice that we input use the title property in GoalItem, because we refer to the same data 'title' in the GoalItem.js component.
 
+## 33. Passing Data Between Components
+
+ - Next, we move the Text Input and Add Goal button to its own component (./components/GoalInput.js)
+
+ - This is very similar to what we did in 32.
+```js
+import React, { useState } from 'react';
+import {View, TextInput, Button, StyleSheet} from 'react-native';
+
+const GoalInput = props => {
+  return (
+    <View style={styles.inputContainer}>
+      <TextInput
+        placeholder="Course Goal"
+        style={styles.textInput}
+        onChangeText={??}                 <!-- ?? -->
+        value={??} />                     <!-- ?? -->
+      <Button title="ADD" onPress={??}/>  <!-- ?? -->
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center'
+  },
+  textInput: {
+    width: '80%',
+    borderBottomColor: 'black', 
+    borderBottomWidth: 1, 
+    padding: 10
+  }
+});
+
+export default GoalInput;
+```
+
+ - But as you can see in the ?? comments, we need some way to refer to the data-related functions/variables. 
+
+ - Let's move the enteredGoal and goalInputHandler to GoalInput.js
+
+```js
+const [enteredGoal, setEnteredGoal] = useState('');
+const goalInputHandler = (enteredText) => { // cleaner code.
+  setEnteredGoal(enteredText);
+}
+```
+
+```js
+<View style={styles.inputContainer}>
+  <TextInput
+    placeholder="Course Goal"
+    style={styles.textInput}
+    onChangeText={goalInputHandler} 
+    value={enteredGoal} />
+  <Button title="ADD" onPress={??}/>  <!-- ?? -->
+</View>
+```
+
+ - Now, we solve 2 of the ??. But we have 1 more; the button handler function.
+ - We can pass the button function. But the previous implementation refers to enteredGoal, and we moved enteredGoal to GoalInput.js. Thus, we modify the button function to take in an argument goalTitle:
+```js
+const addGoalHandler = (goalTitle) => {
+  setCourseGoals(() => [
+    ...courseGoals, 
+    {id: Math.random().toString(), value: goalTitle}
+  ]);  
+  // arrow function. Guarantee get latest courseGoals, because we are passing in courseGoals (into anonymous function).
+}
+```
+```js
+<GoalInput onAddGoal={addGoalHandler}/>
+```
+
+ - In GoalInput.js, we can refer to the addGoalHandler fn via props.onAddGoal.
+```js
+<Button title="ADD" onPress={() => props.onAddGoal(enteredGoal)}/>
+```
+ - in onPress, you will see that we are not using onPress = props.onAddGoal(enteredGoal). This is because if we use a function with parenthesis directly, it will be executed in render time.
+ - But we also need to add parenthesis in order to input an argument.
+ - To fix this, we use an arrow function. This way, we bind props.onAddGoal(..) to onPress without executing it in render time.
+
+

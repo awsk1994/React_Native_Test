@@ -1,30 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState('');
   const [courseGoals, setCourseGoals] = useState([]);
 
-  function goalInputHandler(enteredText){ // cleaner code.
-    setEnteredGoal(enteredText);
-  }
-
-  function addGoalHandler(){
-    setCourseGoals(() => [...courseGoals, {id: Math.random().toString(), value: enteredGoal}]);  // arrow function. Guarantee get latest courseGoals, because we are passing in courseGoals (into anonymous function).
+  const addGoalHandler = (goalTitle) => {
+    setCourseGoals(() => [
+      ...courseGoals, 
+      {id: Math.random().toString(), value: goalTitle}
+    ]);  
+    // arrow function. Guarantee get latest courseGoals, because we are passing in courseGoals (into anonymous function).
   }
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Course Goal"
-          style={styles.textInput}
-          onChangeText={goalInputHandler} 
-          value={enteredGoal} /> 
-        <Button title="ADD" onPress={addGoalHandler}/>
-      </View>
+      <GoalInput onAddGoal={addGoalHandler}/>
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
@@ -37,17 +30,6 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: { // 'screen'' can be any name.
     padding: 50
-  },
-  inputContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center'
-  },
-  textInput: {
-    width: '80%',
-    borderBottomColor: 'black', 
-    borderBottomWidth: 1, 
-    padding: 10
   }
 })
 
