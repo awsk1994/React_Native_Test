@@ -376,6 +376,7 @@ function addGoalHandler(){
    - Note that we need to add a key prop(property), so React can figure out which Text component to update in the future.
    - We will set key prop to goal for now. WARNING: key prop should be unique. For now, we will assume goal is unique.
 
+
 ## 29. Styling List Items
 ```js
 {courseGoals.map((goal) => <View style={styles.listItem}><Text key={goal}>{goal}</Text></View>)}
@@ -402,10 +403,82 @@ listItem: {
 
 ```js
 import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
-...
+```
+
+```js
 <ScrollView>
   {courseGoals.map((goal) => <View key={goal} style={styles.listItem}><Text>{goal}</Text></View>)}
 </ScrollView>
 ```
- - We switch from <View> to <ScrollView>
+ - We switch from <View\> to <ScrollView\>
+
+## 31. A Better List: FlatList
+
+ - ScrollView is not efficient if our list is very long, because it renders all the elements in our list (even those that we don't show yet). An efficient way is to only render the view/elements that is shown to the user.
+ - Change to use FlatList:
+```js
+<FlatList
+  data={courseGoals}
+  renderItem={itemData => (
+    <View style={styles.listItem}>
+      <Text>{itemData.item}</Text>
+    </View>
+  )}
+/>
+```
+
+ - However, as shown below, we get a warning, because we didn't define a key.
+<img src="./img/FlatListMissingKey.png" height="500px"/>
+
+ - To fix this, we need to our courseGoals from a list of Strings to a list of Objects (that contains a key and value/string).
+ - Specifically, we modify addGoalHandler; replacing  enteredGoal with an Object: 
+```js
+{
+  key: Math.random().toString(),  // temporary(non-perfect) way to assign key. Must use 'key' as the key (for now).
+  value: enteredGoal  // The key doesn't have to be 'value'. Can be anything, as long as you reference it later.
+}
+```
+ - We will use a random number (string format) to set the key for now.
+   - The key also must be 'key'.
+ - The 'value' can be anything as long as you refernece it later on; eg. 'val', 'goal'.etc. 
+```js
+function addGoalHandler(){
+  setCourseGoals(() => [...courseGoals, {key: Math.random().toString(), value: enteredGoal}]);  // arrow function. Guarantee get latest courseGoals, because we are passing in courseGoals (into anonymous function).
+}
+```
+
+ - Because we changed to use array of object, we need to change the renderItem's Text value to *itemData.item.value*.
+```js
+<FlatList
+  data={courseGoals}
+  renderItem={itemData => (
+    <View style={styles.listItem}>
+      <Text>{itemData.item.value}</Text>  <!-- MODIFY HERE -->
+    </View>
+  )}
+/>
+```
+
+ - Now, you shouldn't see an error.
+ - Let's say we really don't want to use the key 'key', and instead use 'id'. This is possible.
+
+```js
+function addGoalHandler(){
+  setCourseGoals(() => [...courseGoals, {id: Math.random().toString(), value: enteredGoal}]);  // arrow function. Guarantee get latest courseGoals, because we are passing in courseGoals (into anonymous function).
+}
+```
+
+ - We need to add a keyExtractor with a function that outputs the id.
+
+```jsx
+<FlatList
+  keyExtractor={(item, index) => item.id}  // ADDED THIS!
+  data={courseGoals}
+  renderItem={itemData => (
+    <View style={styles.listItem}>
+      <Text>{itemData.item.value}</Text>
+    </View>
+  )}
+/>
+```
 
