@@ -376,4 +376,27 @@ function addGoalHandler(){
    - Note that we need to add a key prop(property), so React can figure out which Text component to update in the future.
    - We will set key prop to goal for now. WARNING: key prop should be unique. For now, we will assume goal is unique.
 
-  
+## 29. Styling List Items
+```js
+{courseGoals.map((goal) => <View style={styles.listItem}><Text key={goal}>{goal}</Text></View>)}
+```
+```js
+listItem: {
+  padding: 10,
+  marginVertical: 10, // margin top and bottom
+  backgroundColor: '#ccc',
+  borderColor: 'black',
+  borderWidth: 1
+}
+```
+ - Add style to View.
+
+```js
+{courseGoals.map((goal) => <View key={goal} style={styles.listItem}><Text>{goal}</Text></View>)}
+```
+ - We need to move the key to the root element (which is the View, not the Text) (Or else, you will get a warning).
+
+
+
+
+
