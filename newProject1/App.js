@@ -15,13 +15,19 @@ export default function App() {
     // arrow function. Guarantee get latest courseGoals, because we are passing in courseGoals (into anonymous function).
   }
 
+  const removeGoalHandler = goalId => {
+    setCourseGoals(currentGoals => {
+       return currentGoals.filter((goal) => goalId != goal.id); // yields a new array. return true if keep, return false if don't want to keep.
+    });
+  }
+
   return (
     <View style={styles.screen}>
       <GoalInput onAddGoal={addGoalHandler}/>
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
-        renderItem={itemData => <GoalItem onPress={() => console.log("delete")} title={itemData.item.value}/>}
+        renderItem={itemData => <GoalItem id={itemData.item.id} onDelete={removeGoalHandler} title={itemData.item.value}/>}
       />
     </View>
   );

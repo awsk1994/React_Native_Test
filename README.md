@@ -643,3 +643,31 @@ import { TouchableOpacity } from 'react-native';
  - Note that it is possible to use View's onTouchStart and onTouchEnd to do this, but this is too low level. We have to figure out long/short press manually. It is better to use the Touchable class.
  - Within the Touchable class, there are many types; Touchable, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback (only runs on Android), TouchableWithoutFeedback; you can figure those out yourself.
 
+## 35. Deleting Items
+
+ - Now, we want to actually delete the item.
+ - In App.js, in FlatList, we change the onDelete fn to use removeGoalHandler instead of console.log. We also add an id props to help us identity the item to delete.
+```js
+<FlatList renderItem={itemData => <GoalItem id={itemData.item.id} onDelete={removeGoalHandler}/>}
+/>
+```
+
+ - In removeGoalHandler, we take currentGoals, perform a filter and use the result to set into CourseGoals.
+```js
+const removeGoalHandler = goalId => {
+  setCourseGoals(currentGoals => {
+      return currentGoals.filter((goal) => goalId != goal.id); // yields a new array. return true if keep, return false if don't want to keep.
+  });
+}
+```
+
+ - Since removeGoalHandler takes in goalId, we need to modify GoalItem.js to do this. There are two ways:
+ - The first way is to use arrow function (we did this before).
+```js
+<TouchableOpacity activeOpacity={0.8} onPress={() => props.onDelete(props.id)}>
+```
+  - The second way is to use .bind.
+```js
+<TouchableOpacity activeOpacity={0.8} onPress={props.onDelete.bind(this, props.id)}>
+```
+
