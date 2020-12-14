@@ -616,4 +616,30 @@ const addGoalHandler = (goalTitle) => {
  - But we also need to add parenthesis in order to input an argument.
  - To fix this, we use an arrow function. This way, we bind props.onAddGoal(..) to onPress without executing it in render time.
 
+## 34. Working with Touchable Components
+ - Now, we want to delete items from our list when we tap it.
+
+ - First, we import TouchableOpacity into GoalItem.js.
+```js
+import { TouchableOpacity } from 'react-native';
+```
+ - Then, we wrap it around the view (of each item) we have.
+```js
+<TouchableOpacity activeOpacity={0.8} onPress={props.onPress}>
+  <View style={styles.listItem}>
+    <Text>{props.title}</Text>
+  </View>
+</TouchableOpacity>
+```
+
+ - In App.js, we insert the onPress function via onPress. This will correspond to the props.onPress in GoalItem.js
+```js
+<FlatList
+  renderItem={itemData => <GoalItem onPress={() => console.log("delete")}
+/>
+```
+
+ - Now, when we tap an item in the list, we will see a console.log. 
+ - Note that it is possible to use View's onTouchStart and onTouchEnd to do this, but this is too low level. We have to figure out long/short press manually. It is better to use the Touchable class.
+ - Within the Touchable class, there are many types; Touchable, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback (only runs on Android), TouchableWithoutFeedback; you can figure those out yourself.
 
